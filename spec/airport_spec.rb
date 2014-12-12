@@ -36,6 +36,12 @@ describe Airport do
 			expect(airport.capacity).to eq(12)
 		end
 
+		it 'should not allow a plane to land if the airport is full' do
+			allow(plane).to receive(:land!)
+			12.times { airport.land_plane(plane) }
+			expect 'There are no slots available at this airport'
+		end
+
 	end
 
 end

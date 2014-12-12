@@ -17,12 +17,17 @@ class Airport
 		@planes.count
 	end
 
+	def full?
+		@planes == @capacity
+	end
+
 	def dispatch_plane(plane)
 		plane.dispatch!
 		@planes.delete(plane)
 	end
 
 	def land_plane(plane)
+		raise 'There are no slots available at this airport' if full?
 		plane.land!
 		@planes << plane
 	end
