@@ -8,4 +8,8 @@ class Airport
 		plane.dispatch!
 	end
 
+	def land_plane(plane)
+		plane.land!
+	end
+
 end

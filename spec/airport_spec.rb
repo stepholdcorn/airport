@@ -11,6 +11,11 @@ it 'should be able to dispatch a plane' do
 	airport.dispatch_plane(plane)
 end
 
+it 'should be able to land a plane' do
+	expect(plane).to receive(:land!)
+	airport.land_plane(plane)
+end
+
 end
 
 end
