@@ -1,6 +1,7 @@
 require 'airport'
 
 describe Airport do 
+	
 	let(:airport) {Airport.new(:capacity => 12)}
 	let(:plane) {double :plane}
 
