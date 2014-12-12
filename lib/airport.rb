@@ -18,10 +18,15 @@ class Airport
 	end
 
 	def full?
-		@planes == @capacity
+		plane_count == @capacity
+	end
+
+	def empty?
+		plane_count == 0
 	end
 
 	def dispatch_plane(plane)
+		raise 'There are no planes to dispatch' if empty?
 		plane.dispatch!
 		@planes.delete(plane)
 	end

@@ -6,24 +6,16 @@ describe Airport do
 
 	context 'dispatching and landing planes' do
 
-		it 'should be able to dispatch a plane' do
-			expect(plane).to receive(:dispatch!)
-			airport.dispatch_plane(plane)
-		end
-
 		it 'should reduce the plane count when a plane has been dispatched' do
-			expect(plane).to receive(:dispatch!)
+			allow(plane).to receive(:land!)
+			airport.land_plane(plane)
+			allow(plane).to receive(:dispatch!)
 			airport.dispatch_plane(plane)
 			expect(airport.plane_count).to eq(0)
 		end
 
-		it 'should be able to land a plane' do
-			expect(plane).to receive(:land!)
-			airport.land_plane(plane)
-		end
-
 		it 'should increase the plane count when a plane has landed' do
-			expect(plane).to receive(:land!)
+			allow(plane).to receive(:land!)
 			airport.land_plane(plane)
 			expect(airport.plane_count).to eq(1)
 		end
@@ -36,10 +28,20 @@ describe Airport do
 			expect(airport.capacity).to eq(12)
 		end
 
-		it 'should not allow a plane to land if the airport is full' do
+		it 'should know if it is full' do
 			allow(plane).to receive(:land!)
-			12.times { airport.land_plane(plane) }
-			expect 'There are no slots available at this airport'
+  			12.times { airport.land_plane(plane) }
+  			expect(airport).to be_full
+		end
+
+		it 'should not allow a plane to land if it is full' do
+			allow(plane).to receive(:land!)
+  			12.times { airport.land_plane(plane) }
+  			expect( lambda { airport.land_plane(plane) }).to raise_error('There are no slots available at this airport')
+		end
+
+		it 'should not allow a plane to be dispatched if the airport is empty' do
+			expect( lambda { airport.dispatch_plane(plane) }).to raise_error('There are no planes to dispatch')
 		end
 
 	end
