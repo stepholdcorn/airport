@@ -4,6 +4,7 @@ describe Airport do
 
 	let(:airport) {Airport.new(:capacity => 12)}
 	let(:plane) {double :plane}
+	let(:weather) {double :weather}
 
 	context 'dispatching and landing planes' do
 
