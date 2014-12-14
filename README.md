@@ -3,21 +3,24 @@ Airport Challenge
 
 Software to control the flow of planes at an airport.
 
-The following classes are used.
+The following classes and modules are used.
 
 ### Class - Airport 
- Responisibilites        |Collaborators
+ Responsibilities        |Collaborators
  ------------------------|------------------
  Hold plane              |Plane
  Dispatch plane          |Plane
  Land plane 			 |Plane
 
 ### Class - Plane 
- Responisibilites        |Collaborators
+ Responsibilities        |Collaborators
  ------------------------|------------------
  Be at the airport       |Airport
  Take off		         |Airport
- Fly 					 |
  Land					 |Airport
 
-
+### Module - Weather 
+ Responsibilities        |Collaborators
+ ------------------------|------------------
+ Be sunny		         |Airport
+ Be stormy		         |Airport
