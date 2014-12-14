@@ -10,13 +10,11 @@ describe Plane do
 
 	it 'should have a flying status when it has been dispatched' do
 		plane.land!
-		plane.dispatch!
-		expect(plane).to be_flying
+		expect{ plane.dispatch! }.to change(plane, :flying?).from(false).to(true)
 	end
 
 	it 'should not have a flying status when it has landed' do
-		plane.land!
-		expect(plane).not_to be_flying
+		expect{ plane.land! }.to change(plane, :flying?).from(true).to(false)
 	end
 
 end

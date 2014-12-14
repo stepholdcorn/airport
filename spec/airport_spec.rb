@@ -9,20 +9,17 @@ describe Airport do
 	context 'dispatching and landing planes' do
 
 		it 'should reduce the plane count when a plane has been dispatched' do
-			allow(plane).to receive(:land!)
 			allow(airport).to receive(:stormy?) { false }
+			allow(plane).to receive(:land!)
 			airport.land_plane(plane)
 			allow(plane).to receive(:dispatch!)
-			allow(airport).to receive(:stormy?) { false }
-			airport.dispatch_plane(plane)
-			expect(airport.plane_count).to eq(0)
+			expect{ airport.dispatch_plane(plane) }.to change(airport, :plane_count).from(1).to(0)
 		end
 
 		it 'should increase the plane count when a plane has landed' do
 			allow(plane).to receive(:land!)
 			allow(airport).to receive(:stormy?) { false }
-			airport.land_plane(plane)
-			expect(airport.plane_count).to eq(1)
+			expect{ airport.land_plane(plane) }.to change(airport, :plane_count).from(0).to(1)
 		end
 
 		it 'should not land a plane if it is stormy' do
