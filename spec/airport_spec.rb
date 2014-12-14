@@ -10,8 +10,10 @@ describe Airport do
 
 		it 'should reduce the plane count when a plane has been dispatched' do
 			allow(plane).to receive(:land!)
+			allow(airport).to receive(:stormy?) { false }
 			airport.land_plane(plane)
 			allow(plane).to receive(:dispatch!)
+			allow(airport).to receive(:stormy?) { false }
 			airport.dispatch_plane(plane)
 			expect(airport.plane_count).to eq(0)
 		end
@@ -27,6 +29,12 @@ describe Airport do
 			allow(plane).to receive(:land!)
 			allow(airport).to receive(:stormy?) { true }
 			expect( lambda { airport.land_plane(plane) }).to raise_error('It is too stormy to land the plane')
+		end
+
+		it 'should not allow a plane to be dispatched if it is stormy' do
+			allow(plane).to receive(:dispatch!)
+			allow(airport).to receive(:stormy?) { true }
+			expect( lambda { airport.dispatch_plane(plane) }).to raise_error('It is too stormy to dispatch the plane')
 		end
 
 	end
@@ -52,6 +60,7 @@ describe Airport do
 		end
 
 		it 'should not allow a plane to be dispatched if the airport is empty' do
+			allow(airport).to receive(:stormy?) { false }
 			expect( lambda { airport.dispatch_plane(plane) }).to raise_error('There are no planes to dispatch')
 		end
 

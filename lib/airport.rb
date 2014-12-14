@@ -32,6 +32,7 @@ class Airport
 	end
 
 	def dispatch_plane(plane)
+		raise 'It is too stormy to dispatch the plane' if stormy?
 		raise 'There are no planes to dispatch' if empty?
 		plane.dispatch!
 		@planes.delete(plane)
