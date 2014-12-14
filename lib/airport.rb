@@ -1,6 +1,9 @@
-#require_relative 'plane'
+require_relative 'plane'
+require_relative 'weather'
 
 class Airport
+
+	include LocalWeather
 
 	DEFAULT_CAPACITY = 10
 
@@ -9,6 +12,7 @@ class Airport
 	def initialize(options = {})
 		@capacity = options.fetch(:capacity, DEFAULT_CAPACITY)
 		@planes = []
+		@stormy = false
 	end 
 
 	def capacity
@@ -34,6 +38,7 @@ class Airport
 	end
 
 	def land_plane(plane)
+		raise 'It is too stormy to land the plane' if stormy?
 		raise 'There are no slots available at this airport' if full?
 		plane.land!
 		@planes << plane

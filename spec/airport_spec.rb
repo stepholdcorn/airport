@@ -18,8 +18,15 @@ describe Airport do
 
 		it 'should increase the plane count when a plane has landed' do
 			allow(plane).to receive(:land!)
+			allow(airport).to receive(:stormy?) { false }
 			airport.land_plane(plane)
 			expect(airport.plane_count).to eq(1)
+		end
+
+		it 'should not land a plane if it is stormy' do
+			allow(plane).to receive(:land!)
+			allow(airport).to receive(:stormy?) { true }
+			expect( lambda { airport.land_plane(plane) }).to raise_error('It is too stormy to land the plane')
 		end
 
 	end
@@ -32,12 +39,14 @@ describe Airport do
 
 		it 'should know if it is full' do
 			allow(plane).to receive(:land!)
+			allow(airport).to receive(:stormy?) { false }
   			12.times { airport.land_plane(plane) }
   			expect(airport).to be_full
 		end
 
 		it 'should not allow a plane to land if it is full' do
 			allow(plane).to receive(:land!)
+			allow(airport).to receive(:stormy?) { false }
   			12.times { airport.land_plane(plane) }
   			expect( lambda { airport.land_plane(plane) }).to raise_error('There are no slots available at this airport')
 		end

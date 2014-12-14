@@ -1,24 +1,17 @@
 module LocalWeather
 
-	def initialize
-		sunny!
+	def stormy
+		@stormy
 	end
 
-	def sunny?
-		@sunny
+	def random_weather
+		random_number = [*1..20].sample
+		stormy = false if (5..20) === random_number
+		stormy = true if (1..4) === random_number
 	end
 
-	def sunny!
-		@sunny = true
+	def stormy?
+		random_weather == true
 	end
 
-	def stormy!
-		@sunny = false
-	end
-
-	def random_weather(airport)
-		stormy! if (1..4) === airport.weather_condition
-		sunny! if (5..20) === airport.weather_condition
-	end
-	
 end
