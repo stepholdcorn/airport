@@ -2,20 +2,18 @@ require 'airport'
 
 describe Airport do 
 
-	let(:airport) {Airport.new(:capacity => 12)}
+	let(:airport) {Airport.new(:capacity => 12, stormy?: false)}
 	let(:plane) {double :plane, land!: true, dispatch!: true}
 	let(:weather) {double :weather}
 
 	context 'dispatching and landing planes' do
 
 		it 'should reduce the plane count when a plane has been dispatched' do
-			allow(airport).to receive(:stormy?) { false }
 			airport.land_plane(plane)
 			expect{ airport.dispatch_plane(plane) }.to change(airport, :plane_count).from(1).to(0)
 		end
 
 		it 'should increase the plane count when a plane has landed' do
-			allow(airport).to receive(:stormy?) { false }
 			expect{ airport.land_plane(plane) }.to change(airport, :plane_count).from(0).to(1)
 		end
 
@@ -38,19 +36,16 @@ describe Airport do
 		end
 
 		it 'should know if it is full' do
-			allow(airport).to receive(:stormy?) { false }
   			12.times { airport.land_plane(plane) }
   			expect(airport).to be_full
 		end
 
 		it 'should not allow a plane to land if it is full' do
-			allow(airport).to receive(:stormy?) { false }
   			12.times { airport.land_plane(plane) }
   			expect( lambda { airport.land_plane(plane) }).to raise_error('There are no slots available at this airport')
 		end
 
 		it 'should not allow a plane to be dispatched if the airport is empty' do
-			allow(airport).to receive(:stormy?) { false }
 			expect( lambda { airport.dispatch_plane(plane) }).to raise_error('There are no planes to dispatch')
 		end
 

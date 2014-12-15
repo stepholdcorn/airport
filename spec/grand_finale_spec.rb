@@ -3,22 +3,21 @@ require 'plane'
 
 describe "The grand finale (last spec)" do
 
-	let(:airport) {Airport.new(:capacity => 6)}
-	let(:plane1) {Plane.new}
+	let(:airport) {Airport.new(:capacity => 6, stormy?: false)}
+	let(:plane) {Plane.new}
 	let(:fleet) {Array.new(6){ Plane.new }}
 
-
-	let(:fleet) do
-		fleet = []
-		6.times { fleet << Plane.new }
-		fleet
+	it 'all planes can land and have the status of not flying' do
+		fleet.each { |plane| airport.land_plane(plane) }
+		expect(fleet.all? { |plane| plane.flying? }).to eq(false)
 	end
 
-	xit 'all planes can land and have the status of not flying' do
-		allow(airport).to receive(:stormy?) { false }
-		6.times { airport.land_plane(plane) }
-		#*******
+	it 'all planes can be dispatched and have the status of flying' do
+		fleet.each { |plane| airport.land_plane(plane) }
+		fleet.each { |plane| airport.dispatch_plane(plane)}
+		expect(fleet.all? { |plane| plane.flying? }).to eq(true)
 	end
+	
 end
 
 
