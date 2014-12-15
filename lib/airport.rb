@@ -19,12 +19,8 @@ class Airport
 		@capacity ||= DEFAULT_CAPACITY
 	end
 
-	def available_planes
-		@planes
-	end
-
 	def plane_count
-		available_planes.count
+		@planes.count
 	end
 
 	def full?
@@ -39,14 +35,14 @@ class Airport
 		raise 'It is too stormy to dispatch the plane' if stormy?
 		raise 'There are no planes to dispatch' if empty?
 		plane.dispatch!
-		available_planes.delete(plane)
+		@planes.delete(plane)
 	end
 
 	def land_plane(plane)
 		raise 'It is too stormy to land the plane' if stormy?
 		raise 'There are no slots available at this airport' if full?
 		plane.land!
-		available_planes << plane
+		@planes << plane
 	end
 
 end

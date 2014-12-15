@@ -1,17 +1,17 @@
 module LocalWeather
 
-	def stormy
-		@stormy
-	end
-
-	def random_weather
-		random_number = [*1..20].sample
-		stormy = false if (5..20) === random_number
-		stormy = true if (1..4) === random_number
+	def set_weather!
+		@stormy = random_number < 0.1 
 	end
 
 	def stormy?
-		random_weather == true
+		@stormy
+	end
+
+	private
+
+	def random_number
+		rand
 	end
 
 end

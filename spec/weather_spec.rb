@@ -7,7 +7,8 @@
 	let(:weather) {Weather.new}
 
 	it 'should be able to be stormy' do
-		allow(weather).to receive(:random_weather) { true }
+		allow(weather).to receive(:random_number) { 0.05 }
+		weather.set_weather!
 		expect(weather).to be_stormy
 	end 
 

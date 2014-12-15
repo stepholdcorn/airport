@@ -3,16 +3,14 @@ require 'airport'
 describe Airport do 
 
 	let(:airport) {Airport.new(:capacity => 12)}
-	let(:plane) {double :plane}
+	let(:plane) {double :plane, land!: true, dispatch!: true}
 	let(:weather) {double :weather}
 
 	context 'dispatching and landing planes' do
 
 		it 'should reduce the plane count when a plane has been dispatched' do
 			allow(airport).to receive(:stormy?) { false }
-			allow(plane).to receive(:land!)
 			airport.land_plane(plane)
-			allow(plane).to receive(:dispatch!)
 			expect{ airport.dispatch_plane(plane) }.to change(airport, :plane_count).from(1).to(0)
 		end
 
